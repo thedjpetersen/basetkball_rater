@@ -125,14 +125,17 @@ score_games = () ->
             #score_game(games[0])
             for game in games
                 game_score = score_game(game)
+                game.entertainment_score = game_score
 
+            sorted_games = _.sortBy(games, "entertainment_score")
+
+            for game in sorted_games
                 # We only care about exciting games
-                if game_score > 20
-                    table.push([
-                        moment(game.startTimeUTC).format("MM/DD/YYYY"),
-                        game.info.boxscore.basicGameData.hTeam.triCode + " - " + game.info.boxscore.basicGameData.vTeam.triCode,
-                        score_game(game)
-                    ])
+                table.push([
+                    moment(game.startTimeUTC).format("MM/DD/YYYY"),
+                    game.info.boxscore.basicGameData.hTeam.triCode + " - " + game.info.boxscore.basicGameData.vTeam.triCode,
+                    score_game(game)
+                ])
 
             console.log(table.toString())
 
