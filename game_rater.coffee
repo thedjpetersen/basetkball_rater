@@ -127,10 +127,11 @@ score_games = () ->
                 game_score = score_game(game)
                 game.entertainment_score = game_score
 
-            sorted_games = _.sortBy(games, "entertainment_score")
+            # sort by excitement
+            # and only fetch the 10 most exciting
+            sorted_games = _.sortBy(games, "entertainment_score").reverse().slice(0, 9)
 
             for game in sorted_games
-                # We only care about exciting games
                 table.push([
                     moment(game.startTimeUTC).format("MM/DD/YYYY"),
                     game.info.boxscore.basicGameData.hTeam.triCode + " - " + game.info.boxscore.basicGameData.vTeam.triCode,
